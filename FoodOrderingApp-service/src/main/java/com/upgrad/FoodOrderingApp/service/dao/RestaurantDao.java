@@ -25,5 +25,12 @@ public class RestaurantDao {
         }
     }
 
+    public List<RestaurantEntity> getAllRestaurantsByName(String resNameKey){
+        try{
+            return entityManager.createNamedQuery("getAllRestaurantsByName", RestaurantEntity.class).setParameter("resNameKey", resNameKey).getResultList();
+        } catch (NoResultException nre){
+            return null;
+        }
+    }
 
 }

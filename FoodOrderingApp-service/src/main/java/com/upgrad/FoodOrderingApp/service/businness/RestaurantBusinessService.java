@@ -54,5 +54,13 @@ public class RestaurantBusinessService {
         return categoryList;
     }
 
+    public List<RestaurantEntity> getAllRestaurantsByName(String resNameKey) throws RestaurantNotFoundException {
+        System.out.println(resNameKey);
+        if(resNameKey.equals("")){
+            throw new RestaurantNotFoundException("RNF-003)", "Restaurant name field should not be empty");
+        }
+        List<RestaurantEntity> allRestaurantsByName = restaurantDAO.getAllRestaurantsByName(resNameKey);
+        return allRestaurantsByName;
+    }
 
 }
