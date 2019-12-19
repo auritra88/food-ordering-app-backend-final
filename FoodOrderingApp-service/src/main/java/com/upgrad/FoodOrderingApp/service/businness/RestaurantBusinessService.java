@@ -63,4 +63,9 @@ public class RestaurantBusinessService {
         return allRestaurantsByName;
     }
 
+    public List<RestaurantEntity> getAllRestaurantsByCategory(Integer categoryId) {
+        List<RestaurantEntity> allRestaurantsByCategory = restaurantDAO.getAllRestaurantsByCategory(categoryId);
+        return allRestaurantsByCategory;
+    }
+
 }
