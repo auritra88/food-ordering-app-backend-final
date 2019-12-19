@@ -6,6 +6,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,17 +27,44 @@ import java.util.UUID;
 public class CategoryEntity implements Serializable {
 
     @Id
-    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    private Integer id;
 
-    @Column(name = "UUID")
+    @Column(name = "uuid")
+    @NotNull
     @Size(max = 200)
-    public String uuid;
+    private String uuid;
 
-    @Column(name = "CATEGORY_NAME")
+    @Column(name = "category_name")
+    @NotNull
     @Size(max = 255)
-    public String category_name;
+    private String categoryName;
+
+    @ManyToMany
+    @JoinTable(name = "category_item", joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id"))
+    private List<ItemEntity> items = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "restaurant_category", joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "restaurant_id"))
+    private List<RestaurantEntity> restaurants = new ArrayList<>();
+
+    public List<RestaurantEntity> getRestaurants() {
+        return restaurants;
+    }
+
+    public void setRestaurants(List<RestaurantEntity> restaurants) {
+        this.restaurants = restaurants;
+    }
+
+    public List<ItemEntity> getItems() {
+        return items;
+    }
+
+    public void setItems(List<ItemEntity> items) {
+        this.items = items;
+    }
 
     public Integer getId() {
         return id;
@@ -54,26 +82,11 @@ public class CategoryEntity implements Serializable {
         this.uuid = uuid;
     }
 
-    public String getCategory_name() {
-        return category_name;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategory_name(String category_name) {
-        this.category_name = category_name;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return new EqualsBuilder().append(this, obj).isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder().append(this).hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }

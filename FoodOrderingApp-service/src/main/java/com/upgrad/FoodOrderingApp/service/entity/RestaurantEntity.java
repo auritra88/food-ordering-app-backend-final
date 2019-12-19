@@ -12,10 +12,10 @@ import java.util.UUID;
 @Table(name = "restaurant")
 
 @NamedQueries(
-        {       @NamedQuery(name = "getAllRestaurants", query = "select res from RestaurantEntity res"),
+        value = {@NamedQuery(name = "getAllRestaurants", query = "select res from RestaurantEntity res"),
                 @NamedQuery(name = "getAllRestaurantsByName", query = "select res from RestaurantEntity res where res.restaurantName LIKE :resNameKey"),
                 @NamedQuery(name = "getRestaurantByUUID", query = "select res from RestaurantEntity res where res.uuid = :restaurantUUID"),
-                @NamedQuery(name = "getRestaurantById", query = "select res from RestaurantEntity res where res.id = :restaurantId")
+                @NamedQuery(name = "getRestaurantById", query = "select res from RestaurantEntity res where res.id = :restaurantId"),
         }
 )
 
@@ -51,6 +51,20 @@ public class RestaurantEntity implements Serializable {
 //    public void setCategories(List<CategoryEntity> categories) {
 //        this.categories = categories;
 //    }
+
+    @ManyToMany
+    @JoinTable(name = "restaurant_item", joinColumns = @JoinColumn(name = "restaurant_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id"))
+    private List<ItemEntity> items = new ArrayList<>();
+
+
+    public List<ItemEntity> getItems() {
+        return items;
+    }
+
+    public void setItems(List<ItemEntity> items) {
+        this.items = items;
+    }
 
     @Column(name = "number_of_customers_rated")
     private Integer numbrOfCustomersRated;

@@ -31,7 +31,7 @@ public class CategoryController {
 
         for(CategoryEntity c : categories) {
             CategoryListResponse singleCategory = new CategoryListResponse();
-            singleCategory.categoryName(c.getCategory_name()).id(UUID.fromString(c.getUuid()));
+            singleCategory.categoryName(c.getCategoryName()).id(UUID.fromString(c.getUuid()));
             allCategories.addCategoriesItem(singleCategory);
 
         }
@@ -55,7 +55,7 @@ public class CategoryController {
 
         CategoryDetailsResponse categoryDetailsResponse = new CategoryDetailsResponse();
         categoryDetailsResponse.itemList(itemsList);
-        categoryDetailsResponse.categoryName(categoryItemList.get(0).getCategoryEntity().getCategory_name());
+        categoryDetailsResponse.categoryName(categoryItemList.get(0).getCategoryEntity().getCategoryName());
         categoryDetailsResponse.id(UUID.fromString(categoryId));
 
         return new ResponseEntity<CategoryDetailsResponse>(categoryDetailsResponse,HttpStatus.OK);

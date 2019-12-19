@@ -49,9 +49,9 @@ public class RestaurantBusinessService {
             List<CategoryEntity> allCategories = categoryBusinessService.getAllCategoriesBasedCatId(restaurantCategoryEntity.getCategoryId());
             for(CategoryEntity categoryEntity : allCategories){
                 if(categoryList.equals("")) {
-                    categoryList = categoryEntity.getCategory_name();
+                    categoryList = categoryEntity.getCategoryName();
                 }else {
-                    categoryList = categoryList + ", " + categoryEntity.getCategory_name();
+                    categoryList = categoryList + ", " + categoryEntity.getCategoryName();
                 }
             }
         }
