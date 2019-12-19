@@ -2,7 +2,7 @@ package com.upgrad.FoodOrderingApp.service.dao;
 
 import com.upgrad.FoodOrderingApp.service.entity.CategoryEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CategoryItemEntity;
-import com.upgrad.FoodOrderingApp.service.entity.RestaurantEntity;
+import com.upgrad.FoodOrderingApp.service.entity.ItemEntity;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -70,6 +70,18 @@ public class CategoryDao {
             return null;
         }
     }
+
+    public List<ItemEntity> getAllCategoryItems(Integer categoryId){
+        try{
+            return entityManager.createNativeQuery("select i.* from category_item ci inner join\n" +
+                    "item i on ci.item_id = i.id\n" +
+                    "inner join category c on ci.category_id = c.id\n" +
+                    "where c.id = ?",ItemEntity.class).setParameter(1,categoryId).getResultList();
+        } catch (NoResultException nre){
+            return null;
+        }
+    }
+
 
 
 
